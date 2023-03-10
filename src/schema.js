@@ -1,4 +1,8 @@
-const { gql } = require('apollo-server');
+// A schema is a collection of type definitions (hence "typeDefs") that together define the "shape" of queries that are executed against your data.
+// GraphQL implements a "schema-first" development process, which means that you start by defining your schema and then implement resolvers that generate the data described by the schema.
+// The schema is the contract between the client applications that query the data and the backend that serves the data.
+
+const { gql } = require("apollo-server");
 
 const typeDefs = gql`
   type Query {
@@ -35,8 +39,10 @@ const typeDefs = gql`
     author: Author!
     "The track's illustration to display in track card or track page detail"
     thumbnail: String
-    "The track's approximate length to complete, in minutes"
-    length: Int
+    "The track's approximate length to complete, in seconds"
+    length: Int @deprecated(reason: "Use durationInSeconds")
+    "The track's full duration in seconds"
+    durationInSeconds: Int
     "The number of modules this track contains"
     modulesCount: Int
     "The track's complete description, can be in markdown format"
@@ -61,8 +67,10 @@ const typeDefs = gql`
     id: ID!
     "The module's title"
     title: String!
-    "The module's length in minutes"
-    length: Int
+    "The module's length in seconds"
+    length: Int @deprecated(reason: "Use durationInSeconds")
+    "The module's video duration in seconds"
+    durationInSeconds: Int
     "The module's text-based description, can be in markdown format. In case of a video, it will be the enriched transcript"
     content: String
     "The module's video url, for video-based modules"
